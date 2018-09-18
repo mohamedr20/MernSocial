@@ -5,7 +5,6 @@ const controller = require('./user.controller');
 const router = express.Router();
 const passport = require('passport');
 
-
 router.get('/',controller.fetch);
 router.post('/register',controller.register);
 router.post('/login',controller.login);
