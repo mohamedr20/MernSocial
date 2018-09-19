@@ -1,16 +1,56 @@
-
 const mongoose = require('mongoose');
-const Schema = require('mongoose').Schema;
-const mongoose_unique = require('mongoose-unique-validator');
+const Schema = mongoose.Schema;
 
-let postSchema  = new Schema({
-    slug:String,
-    title:String,
-    description:String
-},{timestamps:true})
+// Create Schema
+const PostSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
+  },
+  text: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String
+  },
+  avatar: {
+    type: String
+  },
+  likes: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+      }
+    }
+  ],
+  comments: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+      },
+      text: {
+        type: String,
+        required: true
+      },
+      name: {
+        type: String
+      },
+      avatar: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
+  date: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-const Article = module.exports = mongoose.model('Post',postSchema);
-
-module.exports.addPost = function(newPost,callback){
-    newPost.save(callback)
-}
+module.exports = Post = mongoose.model('Post', PostSchema);
